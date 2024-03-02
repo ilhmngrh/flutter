@@ -56,16 +56,36 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+
+  void dapatData(){
+    String username1 = username.text;
+    String password1 = password.text;
+    
+    if (username1.isEmpty && password1.isEmpty) {
+      notifikasi("Masukkan username dan password dengan benar!");
+    } else {
+      if (username1 == 'admin' && password1 == 'admin123') {
+        notifikasi("Selamat datang $username1");
+        
+      }else{
+        notifikasi("Username atau password Anda salah, silakan cek kembali");
+      }
+      }
+  }
+
+  void notifikasi(String massage){
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(massage),
+      action: SnackBarAction(
+        label: 'Back',
+        onPressed: () {
+          
+        },
+      ),
+    ));
   }
 
   @override
@@ -105,21 +125,30 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'Hello World',
+            TextField(
+              controller: username,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                labelText: "Masukkan username Anda...",
+                ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            TextField(
+              controller: password,
+              obscureText: true,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                labelText: "Masukkan password Anda...",
+                ),
             ),
+            TextButton(
+              onPressed: dapatData, 
+              child: Text(
+                "Submit"
+              )
+              ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
