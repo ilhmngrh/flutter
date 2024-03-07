@@ -1,23 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/main.dart';
 
-class registerForm extends StatelessWidget{
+class registerForm extends StatefulWidget {
+  @override
+  _RegisterFormState createState() => _RegisterFormState();
+}
+
+class _RegisterFormState extends State<registerForm> {
+  bool _obscureText = true;
+
   TextEditingController nama = TextEditingController();
   TextEditingController alamat = TextEditingController();
+  TextEditingController no_hp = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController tanggal = TextEditingController();
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
-  TextEditingController no_hp = TextEditingController();
 
-  void simpan(){
+  void simpan() {}
 
+  void tampilSandi() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
   }
 
-  Widget build(BuildContext context){
+  //date picker
+  DateTime _selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+    if (pickedDate != null && pickedDate != _selectedDate) {
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        
+
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
@@ -34,69 +65,105 @@ class registerForm extends StatelessWidget{
                   )
                 ],
               ),
-              ),
+            ),
             Container(
               padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
               child: TextField(
                 controller: nama,
                 decoration: InputDecoration(
                   labelText: 'Nama',
-                  hintText: 'Masukkan nama Anda...',
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10)
-                  )
+                      borderRadius: BorderRadius.circular(10)),
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
               ),
             ),
             Container(
               padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
               child: TextField(
-                controller: nama,
+                controller: alamat,
                 decoration: InputDecoration(
                   labelText: 'Alamat',
-                  hintText: 'Masukkan alamat Anda...',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10)
-                  )
+                  ),
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
               ),
             ),
             Container(
               padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
               child: TextField(
-                controller: nama,
+                controller: no_hp,
                 decoration: InputDecoration(
                   labelText: 'Nomor Handphone',
-                  hintText: 'Masukkan nomor handphone Anda...',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10)
-                  )
+                  ),
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
               ),
             ),
             Container(
               padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
               child: TextField(
-                controller: nama,
+                controller: email,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+              child: GestureDetector(
+                onTap: () {
+                  _selectDate(context);
+                },
+                child: AbsorbPointer(
+                  child: TextFormField(
+                    controller: TextEditingController(
+                        text:
+                            '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}'),
+                    decoration: InputDecoration(
+                        labelText: 'Tanggal lahir',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+              child: TextField(
+                controller: username,
                 decoration: InputDecoration(
                   labelText: 'Username',
-                  hintText: 'Masukkan username Anda...',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10)
-                  )
+                  ),
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
               ),
             ),
             Container(
               padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
               child: TextField(
-                controller: nama,
+                controller: password,
+                obscureText: _obscureText,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  hintText: 'Masukkan password Anda...',
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10)
-                  )
+                      borderRadius: BorderRadius.circular(10)),
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                        _obscureText ? Icons.visibility : Icons.visibility_off),
+                    onPressed: tampilSandi,
+                  ),
                 ),
               ),
             ),
@@ -136,7 +203,8 @@ class registerForm extends StatelessWidget{
                 )
                 ),
             ),
-          ]),
+          ],
+        ),
       ),
     );
   }
