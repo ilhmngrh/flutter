@@ -49,6 +49,7 @@ class _RegisterFormState extends State<registerForm> {
 
       ),
       body: SingleChildScrollView(
+        padding: EdgeInsets.only(bottom: 15),
         child: Column(
           children: [
             Container(
