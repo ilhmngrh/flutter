@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.pink),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Apps'),
+      home: const MyHomePage(title: ''),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -85,6 +85,13 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Container(
+              child: Image.asset(
+                'logo.jpg',
+                width: 200,
+                height: 200,
+              ),
+            ),
             Container(
               padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
               child: TextField(
